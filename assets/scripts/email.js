@@ -8,7 +8,7 @@ document.getElementById('contact-form').addEventListener('submit', async functio
         message: document.getElementById('message').value
     };
 
-    const response = await fetch('https://email.sarj33t.workers.dev/send-email', {
+    const response = await fetch('https://email.sarj33t.workers.dev', {
         mode: 'no-cors',
         method: 'POST',
         headers: {
