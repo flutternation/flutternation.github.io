@@ -1,7 +1,10 @@
 // Form submission handler
 document.getElementById('contact-form').addEventListener('submit', async function(event){
     event.preventDefault();
-    // Form data
+
+    const form = document.getElementById('contact-form');
+
+    // // Form data
     const formData = {
         name: document.getElementById('username').value,
         email: document.getElementById('email').value,
@@ -9,21 +12,25 @@ document.getElementById('contact-form').addEventListener('submit', async functio
     };
 
     const response = await fetch('https://email.sarj33t.workers.dev', {
-        mode: 'no-cors',
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-    });
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
 
-    const result = await response.json();
-
-    if (response.ok) {
-        console.log('Email sent successfully!', result);
-        document.getElementById('form-status').innerHTML = "Your message has been sent successfully!";
+      const result = await response.text();
+      console.log(result)
+      
+      form.reset();
+      
+      if (response.ok) {
+        console.log(result.success);
+        const statusElement = document.getElementById('form-status');
+        statusElement.innerHTML = "Your message has been sent successfully!";
+        statusElement.style.color = "green"; // Set text color to green for success
     } else {
-        console.error('Error sending email:', result.message);
-        document.getElementById('form-status').innerHTML = "Failed to send the message. Please try again.";
+        console.error(result);
+        const statusElement = document.getElementById('form-status');
+        statusElement.innerHTML = "Failed to send the message. Please try again.";
+        statusElement.style.color = "red"; // Set text color to red for failure
     }
 });
