@@ -1,0 +1,29 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # Trigger this action on push to the 'main' branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # Run on the latest Ubuntu environment
+
+    steps:
+    # Step 1: Check out the code from the repository
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    # Step 2: Replace secrets in static files (HTML/JS)
+    - name: Replace secrets in static files
+      run: |
+        sed -i 's/EMAILJS_PUBLIC_KEY/${{ secrets.EMAILJS_PUBLIC_KEY }}/g' assets/scripts/email.js
+        sed -i 's/EMAILJS_TEMPLATE_ID/${{ secrets.EMAILJS_TEMPLATE_ID }}/g' assets/scripts/email.js
+        sed -i 's/EMAILJS_SERVICE_ID/${{ secrets.EMAILJS_SERVICE_ID }}/g' assets/scripts/email.js
+
+    # Step 3: Deploy to GitHub Pages
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        branch: gh-pages  # Target branch for GitHub Pages deployment
+        folder: .  # Root folder of your static files (no build step needed)
