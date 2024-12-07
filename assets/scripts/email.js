@@ -9,6 +9,7 @@ document.getElementById('contact-form').addEventListener('submit', async functio
     };
 
     const response = await fetch('https://email.sarj33t.workers.dev/', {
+        mode: 'no-cors',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
