@@ -1,6 +1,6 @@
 // Form submission handler
 document.getElementById('contact-form').addEventListener('submit', async function(event){
-    
+    event.preventDefault();
     // Form data
     const formData = {
         name: document.getElementById('username').value,
