@@ -1,11 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Initialize EmailJS (add your User ID here)
-    emailjs.init("EMAILJS_PUBLIC_KEY");
-
     // Form submission handler
-    document.getElementById('contact-form').addEventListener('submit', function(event) {
-        event.preventDefault();  // Prevent default form submission
-
+    document.getElementById('contact-form').addEventListener('submit', async function(event){
+    
         // Form data
         const formData = {
             name: document.getElementById('name').value,
@@ -13,14 +9,23 @@ document.addEventListener('DOMContentLoaded', function () {
             message: document.getElementById('message').value
         };
 
-        // Send the email via EmailJS
-        emailjs.send("EMAILJS_SERVICE_ID", "EMAILJS_TEMPLATE_ID", formData)
-            .then(function(response) {
-                // Show success message
-                document.getElementById('form-status').innerHTML = "Your message has been sent successfully!";
-            }, function(error) {
-                // Show error message
-                document.getElementById('form-status').innerHTML = "Failed to send the message. Please try again.";
-            });
+        const response = await fetch('https://email.sarj33t.workers.dev/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        });
+    
+        const result = await response.json();
+
+        if (response.ok) {
+            console.log('Email sent successfully!', result);
+            document.getElementById('form-status').innerHTML = "Your message has been sent successfully!";
+        } else {
+            console.error('Error sending email:', result.message);
+            document.getElementById('form-status').innerHTML = "Failed to send the message. Please try again.";
+        }
     });
+    
 });
