@@ -17,9 +17,27 @@ jobs:
     # Step 2: Replace secrets in static files (HTML/JS)
     - name: Replace secrets in static files
       run: |
+        # Check if secrets are set
+        if [ -z "${{ secrets.EMAILJS_PUBLIC_KEY }}" ]; then
+          echo "EMAILJS_PUBLIC_KEY is not set!"
+          exit 1
+        fi
+        if [ -z "${{ secrets.EMAILJS_TEMPLATE_ID }}" ]; then
+          echo "EMAILJS_TEMPLATE_ID is not set!"
+          exit 1
+        fi
+        if [ -z "${{ secrets.EMAILJS_SERVICE_ID }}" ]; then
+          echo "EMAILJS_SERVICE_ID is not set!"
+          exit 1
+        fi
+
+        # Replace secrets in email.js
         sed -i 's/EMAILJS_PUBLIC_KEY/${{ secrets.EMAILJS_PUBLIC_KEY }}/g' assets/scripts/email.js
         sed -i 's/EMAILJS_TEMPLATE_ID/${{ secrets.EMAILJS_TEMPLATE_ID }}/g' assets/scripts/email.js
         sed -i 's/EMAILJS_SERVICE_ID/${{ secrets.EMAILJS_SERVICE_ID }}/g' assets/scripts/email.js
+
+        # Optional: Check the replaced file contents
+        cat assets/scripts/email.js
 
     # Step 3: Deploy to GitHub Pages using the Personal Access Token for authentication
     - name: Deploy to GitHub Pages
