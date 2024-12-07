@@ -3,7 +3,7 @@ document.getElementById('contact-form').addEventListener('submit', async functio
     
     // Form data
     const formData = {
-        name: document.getElementById('name').value,
+        name: document.getElementById('username').value,
         email: document.getElementById('email').value,
         message: document.getElementById('message').value
     };
