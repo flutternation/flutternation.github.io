@@ -14,10 +14,12 @@ body {
 
 /* Header */
 header {
-    background: #333;
-    color: #fff;
+    color: #333;
     padding: 1em 0;
     text-align: center;
+    background-image: url('assets/images/header-bg.png');
+    background-position: center;
+    height: auto; /* Adjust height as needed */
 }
 
 header nav {
@@ -241,4 +243,11 @@ footer .social-links li {
 footer .social-links a {
     color: white;
     text-decoration: none;
+}
+
+.full-width-img {
+    width: 100%;          /* Ensures the image stretches across the full width */
+    height: auto;         /* Maintains the aspect ratio */
+    object-fit: cover;    /* Ensures the image covers its container without distortion */
+    display: block;       /* Removes any whitespace caused by inline elements */
 }
