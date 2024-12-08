@@ -251,3 +251,10 @@ footer .social-links a {
     object-fit: cover;    /* Ensures the image covers its container without distortion */
     display: block;       /* Removes any whitespace caused by inline elements */
 }
+
+.centered-img {
+    display: block; /* Ensures the image behaves like a block-level element */
+    margin: 0 auto; /* Automatically centers the image horizontally */
+    max-width: 100%; /* Makes the image responsive */
+    height: auto; /* Maintains aspect ratio */
+}
